@@ -12,7 +12,6 @@ function setup() {
 		console.log("SUBMIT")
 		socket.emit('chat', $('#m').val());
 		$('#m').val('');
-		$('#messages li:last-child').remove();
 		return false;
 	});
 

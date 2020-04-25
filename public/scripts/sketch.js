@@ -71,6 +71,5 @@ function upgradeColor(c){
 	}
 	return c
 }
-setup()
 console.log($('messages'))
 console.log("dwguwdayg")

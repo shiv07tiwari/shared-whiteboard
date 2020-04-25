@@ -20,7 +20,7 @@ function newConnection(socket){
 
 	socket.on('chat', function(msg){
 		socket.broadcast.emit('chat', msg);
-	  });
+	});
 	
 	function mouseMsg(data) {
 		socket.broadcast.emit('mouse',data)

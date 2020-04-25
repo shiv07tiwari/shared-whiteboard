@@ -18,6 +18,10 @@ function newConnection(socket){
 	console.log('connection:',	socket.id);
 	socket.on('mouse', mouseMsg);
 
+	socket.on('clear', function(dump){
+		socket.broadcast.emit('clear',"helloooo")
+	});
+
 	socket.on('chat', function(msg){
 		socket.broadcast.emit('chat', msg);
 	});

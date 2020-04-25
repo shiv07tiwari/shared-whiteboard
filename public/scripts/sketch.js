@@ -1,5 +1,7 @@
 let clr
 let socket
+
+
 function setup() {
 	
 	let h = 400
@@ -14,8 +16,10 @@ function setup() {
 		$('#m').val('');
 		return false;
 	});
+	$("#clearbtn").click(emitClear);
 
 	socket.on('mouse', newDrawing);
+	socket.on('clear',clearPlease);
 	
 	socket.on('chat', function(msg){
 		if (msg != "") {
@@ -24,13 +28,15 @@ function setup() {
 		}
 	  });
 
+
+
   	var canvas = createCanvas(h, w);
    	canvas.parent('sketch-holder');
-
+   	canvas.id("myCanvas")
 
   	background(0);
   	clr = random(360)
-  	noStroke()
+   	noStroke()
 }
 
 function displayDot(x, y, color, color2 = 100){
@@ -42,9 +48,11 @@ function displayDot(x, y, color, color2 = 100){
 
 function draw() {
 }
+
 function mousePressed(){
 	mouseDragged()
 }
+
 function mouseDragged() {
 	clr += 1
 	clr = upgradeColor(clr)
@@ -63,6 +71,7 @@ function newDrawing(data){
 	data.color = 100
 	displayDot(data.x, data.y, data.color, 100)
 }
+
 function upgradeColor(c){
 	if (c < 0){
 		c = 360 - c
@@ -71,5 +80,20 @@ function upgradeColor(c){
 	}
 	return c
 }
+
+
+function clearPlease(dump){
+	console.log(dump)
+	clear();
+	background(0);	
+}
+
+function emitClear(){
+	clear();
+	background(0);
+	socket.emit('clear',"lollll");
+
+}
+
 console.log($('messages'))
 console.log("dwguwdayg")

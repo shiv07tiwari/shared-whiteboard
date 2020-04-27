@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shared Canvas</title>
+  <link rel="stylesheet" type="text/css" href="./static/board.css">
+</head>
+
+<body>
+  <div id="sketch-holder">
+    <!-- Our sketch will go here! -->
+  </div>
+  <div>
+    <ul id="messages"></ul>
+    <!-- <form action="/action_page.php"> -->
+      <!-- <label for="c">Select your favorite color:</label> -->
+      <div style = "text-align: center">
+        <input type="color" id="c" name="c" value="#ff0000">
+      </div>
+    <!-- </form> -->
+
+    <form action="">
+      <input id="m" autocomplete="off" />
+      <button>Send</button>
+    </form>
+    
+  </div>
+  <script src="./p5.min.js"></script>
+  <script src="./addons/p5.dom.min.js"></script>
+  <script src="./addons/socket.io-client.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="./scripts/sketch.js"></script>
+</body>
+
+</html>

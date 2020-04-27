@@ -5,25 +5,36 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shared Canvas</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="./static/board.css">
 </head>
 
 <body>
-  <div id="sketch-holder">
-    <!-- Our sketch will go here! -->
+  <div class="container" >
+    <div class="row">
+      <div class="col-sm" id="sketch-holder">
+      <!-- Our sketch will go here! -->
+      </div>
+      <div class="col-sm">
+        <ul id="messages"></ul>
+          <form action="">
+            <input id="m" autocomplete="off" />
+            <button type="button" class="btn btn-info">Send</button>
+          </form>
+      </div>
+    </div>
+    <button type="button" class="btn btn-info" id="pencilbtn" style="margin-right: 1%">DRAW</button>
+    <button type="button" class="btn btn-secondary" id="erasebtn" style="margin-right: 1%">ERASE</button>
+    <button type="button" class="btn btn-success" id="clearbtn">CLEAR</button>
   </div>
-  <button id="clearbtn">CLEAR</button>
-  <div>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" />
-      <button>Send</button>
-    </form>
-  </div>
+
   <script src="./p5.min.js"></script>
   <script src="./addons/p5.dom.min.js"></script>
   <script src="./addons/socket.io-client.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="./scripts/sketch.js"></script>
 </body>
 

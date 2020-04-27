@@ -18,11 +18,12 @@ function setup() {
 	});
 
 	$("#clearbtn").click(emitClear);
+	$("#pencilbtn").click(emitDraw);
 	$("#erasebtn").click(emitErase);
 
 	socket.on('mouse', newDrawing);
 	socket.on('clear', clearPlease);
-	
+
 	socket.on('chat', function(msg){
 		if (msg != "") {
 			$('#messages').append($('<li>').text(msg));
@@ -95,14 +96,12 @@ function emitClear(){
 	socket.emit('clear',"lollll");
 }
 
-function emitErase(dump){
-	console.log(dump)
-
+function emitDraw(){
 	var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext("2d");
     
     var bMouseDown = false;
-    
+	
     $("#myCanvas").mousedown(function() {
         bMouseDown = true;
     });
@@ -113,17 +112,44 @@ function emitErase(dump){
     
     $("#myCanvas").mousemove(function(e) {
         if (bMouseDown) {
-			context.strokeStyle = "#ff0000";
-            context.lineWidth = 10;
+			context.strokeStyle = "#FF0000";
+            context.lineWidth = 5;
             context.beginPath();
-            context.globalCompositeOperation="destination-out";
-            
+            context.globalCompositeOperation="source-over";
             context.moveTo(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
-            context.lineTo(e.pageX ,e.pageY);
+            // context.lineTo(e.pageX ,e.pageY);
             context.stroke();
-            
         }  
     });
+}
+
+function emitErase(){
+
+    var canvas = document.getElementById("myCanvas");
+    var context = canvas.getContext("2d");
+    
+    var bMouseDown = false;
+	
+    $("#myCanvas").mousedown(function() {
+        bMouseDown = true;
+    });
+    
+    $("#myCanvas").mouseup(function() {
+        bMouseDown = false;  
+    });
+    
+    $("#myCanvas").mousemove(function(e) {
+        if (bMouseDown) {
+			context.strokeStyle = "#FF0000";
+            context.lineWidth = 5;
+            context.beginPath();
+            context.globalCompositeOperation="destination-out";
+            context.moveTo(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+            // context.lineTo(e.pageX ,e.pageY);
+            context.stroke();
+        }  
+    });
+    socket.emit('erase',"dukhi");
 }
 
 console.log($('messages'))

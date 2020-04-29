@@ -1,0 +1,188 @@
+[1mdiff --git a/server.js b/server.js[m
+[1mindex 088a961..5b7f0d5 100644[m
+[1m--- a/server.js[m
+[1m+++ b/server.js[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-const {Log} = require("./logs")[m
+[32m+[m[32mconst { Log } = require("./logs")[m
+ let express = require('express');[m
+ let app = express();[m
+ var http = require('http').Server(app);[m
+[36m@@ -7,86 +7,101 @@[m [mvar io = require('socket.io')(http)[m
+ var clients = [][m
+ [m
+ let host = 3000[m
+[31m-[m
+[31m-app.use(express.static('public'));[m
+[31m-[m
+ var messages = [];[m
+[32m+[m[32mlet activeUser = null[m
+ [m
+[31m-io.on('connection', newConnection)[m
+[31m-[m
+[31m-function newConnection(socket){[m
+[31m-console.log('connection:', socket.id);[m
+[31m-const obj = new Log(socket.id)[m
+[31m-clients.push(obj)[m
+[31m-console.log("object added is :",obj)[m
+[31m-console.log("number of clients",clients.length)[m
+[31m-[m
+[31m-socket.on('mouse', mouseMsg);[m
+[32m+[m[32mvar standard_input = process.stdin;[m
+[32m+[m[32mstandard_input.setEncoding('utf-8');[m
+ [m
+[32m+[m[32mapp.use(express.static('public'));[m
+[32m+[m[32mio.on('connection', newConnection)[m
+ [m
+[31m-socket.on('disconnect', function () {[m
+[31m-console.log('user disconnected');[m
+[31m-for (i in clients){[m
+[31m-// console.log(i, clients[i])[m
+[31m-if (io.sockets.connected[clients[i].getSocketId()] == undefined){[m
+[31m-clients[i].updateActive()[m
+[31m-console.log(clients[i])[m
+[31m-}[m
+[31m-}[m
+[31m-});[m
+[31m-[m
+[31m-socket.on('clear', function(dump){[m
+[31m-socket.broadcast.emit('clear',"helloooo")[m
+[31m-});[m
+[31m-[m
+[31m-socket.on('erase', function(flag){[m
+[31m-console.log("Erase server",flag)[m
+[31m-socket.broadcast.emit('erase',flag)[m
+[31m-});[m
+[31m-[m
+[31m-// socket.on('notActive', function (socketId) {[m
+[31m-// console.log("hello")[m
+[31m-    //     for (i in clients){[m
+[31m-// console.log("client is ",clients[i]);[m
+[31m-[m
+[31m-// if (clients[i].getSocketId() == socketId){[m
+[31m-// clients[i].updateActive(false);[m
+[31m-// console.log('updated');[m
+[31m-// }[m
+[31m-// }[m
+[31m-// });[m
+[31m-[m
+[31m-socket.on('chat', function({socketId,msg,time}){[m
+[31m-for (i in clients){[m
+[31m-// console.log("client is ",clients[i]);[m
+[31m-if (clients[i].getSocketId() == socketId){[m
+[31m-clients[i].appendMessages({[m
+[31m-msg:msg,[m
+[31m-time:time[m
+[31m-})[m
+[31m-}[m
+[31m-}[m
+[31m-console.log(socketId)[m
+[31m-console.log(msg)[m
+[31m-io.emit('chat', msg);[m
+[31m-});[m
+[31m-[m
+[31m-function mouseMsg({socketId,data,time}) {[m
+[31m-socket.broadcast.emit('mouse',data)[m
+[31m-for (i in clients){[m
+[31m-// console.log("client is ",clients[i]);[m
+[31m-if (clients[i].getSocketId() == socketId){[m
+[31m-clients[i].appendMousePositions({[m
+[31m-data:data,[m
+[31m-time:time[m
+[31m-})[m
+[31m-}[m
+[31m-}[m
+[31m-// console.log(data)[m
+[31m-}[m
+[32m+[m[32mfunction newConnection(socket) {[m
+[32m+[m	[32mconsole.log('connection:', socket.id);[m
+[32m+[m	[32mconst obj = new Log(socket.id)[m
+[32m+[m	[32mclients.push(obj)[m
+[32m+[m	[32m//console.log("object added is :", obj)[m
+[32m+[m[32m//	console.log("number of clients", clients.length)[m
+[32m+[m
+[32m+[m	[32msocket.on('mouse', mouseMsg);[m
+[32m+[m	[32msocket.on('active', activeHandler);[m
+[32m+[m
+[32m+[m	[32mfunction activeHandler(socketId) {[m
+[32m+[m	[32m//	console.log("current active", socketId);[m
+[32m+[m		[32mactiveUser = socketId;[m
+[32m+[m		[32msocket.broadcast.emit('active', activeUser);[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32msocket.on('disconnect', function () {[m
+[32m+[m	[32m//	console.log('user disconnected');[m
+[32m+[m		[32mfor (i in clients) {[m
+[32m+[m			[32m// console.log(i, clients[i])[m
+[32m+[m			[32mif (io.sockets.connected[clients[i].getSocketId()] == undefined) {[m
+[32m+[m				[32mclients[i].updateActive()[m
+[32m+[m			[32m//	console.log(clients[i])[m
+[32m+[m			[32m}[m
+[32m+[m		[32m}[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m	[32msocket.on('clear', function (dump) {[m
+[32m+[m		[32msocket.broadcast.emit('clear', "helloooo")[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m	[32m// socket.on('log', function(dump) {[m
+[32m+[m	[32m// 	console.log("aaya " + socket.id);[m
+[32m+[m	[32m// 	socket.broadcast.emit('log', "test")[m
+[32m+[m	[32m// });[m
+[32m+[m
+[32m+[m	[32msocket.on('erase', function (flag) {[m
+[32m+[m	[32m//	console.log("Erase server", flag)[m
+[32m+[m		[32msocket.broadcast.emit('erase', flag)[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m	[32msocket.on('chat', function ({ socketId, msg, time }) {[m
+[32m+[m		[32mfor (i in clients) {[m
+[32m+[m			[32m// console.log("client is ",clients[i]);[m
+[32m+[m			[32mif (clients[i].getSocketId() == socketId) {[m
+[32m+[m				[32mclients[i].appendMessages({[m
+[32m+[m					[32mmsg: msg,[m
+[32m+[m					[32mtime: time[m
+[32m+[m				[32m})[m
+[32m+[m			[32m}[m
+[32m+[m		[32m}[m
+[32m+[m	[32m//	console.log(socketId)[m
+[32m+[m	[32m//	console.log(msg)[m
+[32m+[m		[32mio.emit('chat', msg);[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m	[32mfunction mouseMsg({ socketId, data, time }) {[m
+[32m+[m		[32msocket.broadcast.emit('mouse', data)[m
+[32m+[m		[32mfor (i in clients) {[m
+[32m+[m			[32m// console.log("client is ",clients[i]);[m
+[32m+[m			[32mif (clients[i].getSocketId() == socketId) {[m
+[32m+[m				[32mclients[i].appendMousePositions({[m
+[32m+[m					[32mdata: data.x +" " +data.y,[m
+[32m+[m					[32mtime: time[m
+[32m+[m				[32m})[m
+[32m+[m			[32m}[m
+[32m+[m		[32m}[m
+[32m+[m		[32m// console.log(data)[m
+[32m+[m	[32m}[m
+ }[m
+ [m
+ [m
+[31m-http.listen(host, function(){[m
+[31m-console.log("Listening on 3000")[m
+[32m+[m[32mhttp.listen(host, function () {[m
+[32m+[m	[32mconsole.log("Listening on 3000")[m
+ })[m
+[32m+[m
+[32m+[m[32mstandard_input.on('data', function (data) {[m
+[32m+[m	[32mvar inp = data.trim().split(" ");[m
+[32m+[m
+[32m+[m	[32mif (inp.length == 1) {[m
+[32m+[m		[32mif(data === 'exit\n'){[m
+[32m+[m			[32mconsole.log("User input complete, program exit.");[m
+[32m+[m			[32mprocess.exit();[m
+[32m+[m		[32m}[m
+[32m+[m		[32mif (data.trim() == "collect") {[m
+[32m+[m			[32mconsole.log(clients)[m
+[32m+[m		[32m}[m
+[32m+[m	[32m}[m
+[32m+[m[32m});[m
+\ No newline at end of file[m

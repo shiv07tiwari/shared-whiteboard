@@ -14,12 +14,12 @@ class Log{
         this.isActive = false;
     }
     appendMessages(msg){
-        console.log("message pushed",msg)
-        this.messages.push(msg)
+       // console.log("message pushed",typeof msg.msg)
+        this.messages.push(msg.msg)
     }
 
     appendMousePositions(data){
-        this.mousePositions.push(data)
+        this.mousePositions.push(data.data)
     }
 }
 

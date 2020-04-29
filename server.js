@@ -27,7 +27,7 @@ function newConnection(socket) {
 	socket.on('active', activeHandler);
 
 	function activeHandler(socketId) {
-	//	console.log("current active", socketId);
+		console.log("current active", socketId);
 		activeUser = socketId;
 		socket.broadcast.emit('active', activeUser);
 	}

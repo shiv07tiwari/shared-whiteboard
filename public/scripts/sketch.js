@@ -111,6 +111,11 @@ function mousePressed() {
   mouseDragged()
 }
 
+function mouseReleased() {
+  activeUser = null
+  socket.emit("active",null)
+}
+
 function mouseDragged() {
   // clr += 1
   // clr = upgradeColor(clr)
@@ -124,21 +129,33 @@ function mouseDragged() {
   }
   console.log(rgb_color)
 
-  let data = {
-    x: mouseX,
-    y: mouseY,
-    color: rgb_color
+  if (activeUser == null || activeUser == socket.id) {
+    
+    if (activeUser == null) {
+      activeUser = socket.id;
+      socket.emit("active",activeUser)
+
+    }
+
+    let data = {
+      x: mouseX,
+      y: mouseY,
+      color: rgb_color
+    }
+    var datetime = new Date();
+    var time = datetime.toISOString();
+    socket.emit('mouse', {
+      socketId: socket.id,
+      data: data,
+      time: time
+    });
+    // console.log('sending:', mouseX +',', mouseY +',', clr)
+    noStroke()
+    displayDot(mouseX, mouseY, rgb_color)
+  } else {
+    //
   }
-  var datetime = new Date();
-  var time = datetime.toISOString();
-  socket.emit('mouse', {
-    socketId: socket.id,
-    data: data,
-    time: time
-  });
-  // console.log('sending:', mouseX +',', mouseY +',', clr)
-  noStroke()
-  displayDot(mouseX, mouseY, rgb_color)
+  
 }
 
 function newDrawing(data) {

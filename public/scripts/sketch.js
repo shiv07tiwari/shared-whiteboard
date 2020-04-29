@@ -20,7 +20,6 @@ function componentToHex(c) {
 function rgbToHex(r, g, b) {
   return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
-
 //   alert(hexToRgb("#0033ff").g); // "51";
 let color = "#ff0000";
 let colorInput;
@@ -34,14 +33,17 @@ function setup() {
 
   colorInput = document.querySelector('#c');
   colorInput.addEventListener('input', () => {
+    if (isErase == "true") {
+      isErase = "false"
+    }
     color = colorInput.value;
-    //console.log(color);
+    console.log(color);
   })
 
   socket = io.connect('http://localhost:3000')
 
   $('form').submit(function () {
-   // console.log("SUBMIT")
+    // console.log("SUBMIT")
     var datetime = new Date();
     var time = datetime.toISOString();
     // console.log("timestamp is ",new Date().getTime())
@@ -60,7 +62,7 @@ function setup() {
   $("#erasebtn").click(emitErase);
 
   $('#logbtn').click(emitLog);
-  
+
   socket.on('mouse', newDrawing);
   socket.on('clear', clearPlease);
 
@@ -99,60 +101,51 @@ function displayDot(x, y, color) {
   fill(color.r, color.g, color.b)
   ellipse(x, y, 10)
   colorMode(RGB)
+
 }
 
 function draw() {
-
 }
 
 function mousePressed() {
   mouseDragged()
 }
 
-function mouseReleased() {
-  activeUser = null
-  socket.emit("active", null)
-}
-
 function mouseDragged() {
-
+  // clr += 1
+  // clr = upgradeColor(clr)
+  // clr = 100
+  colorInput = document.querySelector('#c');
+  color = colorInput.value;
   if (isErase == "true") {
     rgb_color = { r: 255, g: 255, b: 255 }
   } else {
     rgb_color = hexToRgb(color)
   }
-  //console.log(rgb_color)
+  console.log(rgb_color)
 
-  if (activeUser == null || activeUser == socket.id) {
-    if (activeUser == null) {
-      socket.emit("active", socket.id)
-      activeUser = socket.id
-    }
-    let data = {
-      x: mouseX,
-      y: mouseY,
-      color: rgb_color
-    }
-    var datetime = new Date();
-    var time = datetime.toISOString();
-    socket.emit('mouse', {
-      socketId: socket.id,
-      data: data,
-      time: time
-    });
-    // console.log('sending:', mouseX +',', mouseY +',', clr)
-    noStroke()
-    displayDot(mouseX, mouseY, rgb_color)
-  } else {
-    console.log("someone else is active on board yo ", activeUser);
+  let data = {
+    x: mouseX,
+    y: mouseY,
+    color: rgb_color
   }
+  var datetime = new Date();
+  var time = datetime.toISOString();
+  socket.emit('mouse', {
+    socketId: socket.id,
+    data: data,
+    time: time
+  });
+  // console.log('sending:', mouseX +',', mouseY +',', clr)
+  noStroke()
+  displayDot(mouseX, mouseY, rgb_color)
 }
 
 function newDrawing(data) {
- // console.log("hello", data)
+  console.log("hello", data)
   // data.color = 100
 
-  colorInput.value = rgbToHex(data.color.r, data.color.g, data.color.b)
+  //colorInput.value = rgbToHex(data.color.r,data.color.g,data.color.b)
   color = rgbToHex(data.color.r, data.color.g, data.color.b)
 
   displayDot(data.x, data.y, data.color)
@@ -194,7 +187,7 @@ function erasePlease(flag) {
 
 function generateLog(data) {
   console.log(data)
-  
+
   var myjson = JSON.stringify(data, null, 2);
   var x = window.open();
   x.document.open();
@@ -214,6 +207,3 @@ function emitErase() {
   //console.log("Erase", isErase);
   socket.emit('erase', isErase);
 }
-
-//console.log($('messages'))
-//console.log("dwguwdayg")

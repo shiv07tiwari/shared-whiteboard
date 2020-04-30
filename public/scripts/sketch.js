@@ -2,6 +2,7 @@ let clr
 let socket
 let isErase
 let activeUser = null
+let isRecorded = true
 
 function hexToRgb(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -37,7 +38,7 @@ function setup() {
       isErase = "false"
     }
     color = colorInput.value;
-    console.log(color);
+    //console.log(color);
   })
 
   socket = io.connect('http://localhost:3000')
@@ -47,14 +48,17 @@ function setup() {
     var datetime = new Date();
     var time = datetime.toISOString();
     // console.log("timestamp is ",new Date().getTime())
-    console.log($('#m').val())
+    //console.log($('#m').val())
     socket.emit('chat', {
       socketId: socket.id,
       msg: $('#m').val(),
       time: time
     });
+    socket.emit('marker', "marker");
+
     $('#m').val('');
     return false;
+
   });
 
   $("#clearbtn").click(emitClear);
@@ -67,8 +71,17 @@ function setup() {
   socket.on('clear', clearPlease);
 
   socket.on('erase', erasePlease);
+  socket.on('marker', sendMarker);
+
   socket.on('active', function (socketId) {
+
     activeUser = socketId;
+    if (activeUser == socket.id) {
+      isRecorded = false;
+    } else {
+      isRecorded = true;
+    }
+    console.log(isRecorded)
   });
 
   socket.on('logfile', generateLog);
@@ -112,6 +125,7 @@ function mousePressed() {
 }
 
 function mouseReleased() {
+  isRecorded = true;
   activeUser = null
   socket.emit("active",null)
 }
@@ -127,12 +141,13 @@ function mouseDragged() {
   } else {
     rgb_color = hexToRgb(color)
   }
-  console.log(rgb_color)
+ // console.log(rgb_color)
 
   if (activeUser == null || activeUser == socket.id) {
     
     if (activeUser == null) {
       activeUser = socket.id;
+      isRecorded = false;
       socket.emit("active",activeUser)
 
     }
@@ -149,6 +164,7 @@ function mouseDragged() {
       data: data,
       time: time
     });
+    socket.emit('marker', "marker");
     // console.log('sending:', mouseX +',', mouseY +',', clr)
     noStroke()
     displayDot(mouseX, mouseY, rgb_color)
@@ -203,7 +219,7 @@ function erasePlease(flag) {
 }
 
 function generateLog(data) {
-  console.log(data)
+  //console.log(data)
 
   var myjson = JSON.stringify(data, null, 2);
   var x = window.open();
@@ -217,6 +233,20 @@ function emitDraw() {
   isErase = "false"
   socket.emit('erase', isErase);
 
+}
+
+function sendMarker(dump) {
+  if (isRecorded) {
+    var recordedState = null
+    socket.emit('send-marker', {
+      state : recordedState
+    })
+  } else {
+    var recordedState = socket.id
+    socket.emit('send-marker', {
+      state : recordedState
+    })
+  }
 }
 
 function emitErase() {

@@ -26,8 +26,8 @@ let colorInput;
 
 function setup() {
 
-  let h = 500
-  let w = 500
+  let h = 500;
+  let w = $('sketch-holder').width();
 
   isErase = "false"
 
@@ -42,20 +42,7 @@ function setup() {
 
   socket = io.connect('http://localhost:3000')
 
-  $('form').submit(function () {
-    // console.log("SUBMIT")
-    var datetime = new Date();
-    var time = datetime.toISOString();
-    // console.log("timestamp is ",new Date().getTime())
-    console.log($('#m').val())
-    socket.emit('chat', {
-      socketId: socket.id,
-      msg: $('#m').val(),
-      time: time
-    });
-    $('#m').val('');
-    return false;
-  });
+  $('form').submit(sendMsg);
 
   $("#clearbtn").click(emitClear);
   $("#pencilbtn").click(emitDraw);
@@ -87,7 +74,7 @@ function setup() {
 
 
 
-  var canvas = createCanvas(h, w);
+  var canvas = createCanvas(w, h);
   canvas.parent('sketch-holder');
   canvas.id("myCanvas")
 
@@ -156,6 +143,21 @@ function mouseDragged() {
     //
   }
   
+}
+
+function sendMsg(){
+    // console.log("SUBMIT")
+    var datetime = new Date();
+    var time = datetime.toISOString();
+    // console.log("timestamp is ",new Date().getTime())
+    console.log($('#m').val())
+    socket.emit('chat', {
+      socketId: socket.id,
+      msg: $('#m').val(),
+      time: time
+    });
+    $('#m').val('');
+    return false;  
 }
 
 function newDrawing(data) {

@@ -10,27 +10,36 @@
 </head>
 
 <body>
-  <div class="container" >
+  <div class="outer-container"  >
   <div class="row">
-  <div class="col-sm" id="sketch-holder">
+  <div id="sketch-holder">
     <!-- Our sketch will go here! -->
   </div>
-  <div class="col-sm">
-    <ul id="messages"></ul>
-    <div style = "text-align: center">
-        <input type="color" id="c" name="c" value="#ff0000">
+<!------------------------>
+    <div class="detailBox">
+    <div class="titleBox">
+      <label>Messages</label>
     </div>
-    <form action="">
-      <input id="m" autocomplete="off" />
-      <button type="button" class="btn btn-info">Send</button>
+    <div class="actionBox">
+        <ul class="commentList" id="messages"></ul>
+    </div>
+    <form class = "form-inline" action="">
+            <input id="m" class="form-control text-field" type="text" placeholder="Your message" />
+            <button type="submit" class="btn send-btn">SEND</button>
     </form>
+    </div>
+<!------------------------>
+  
   </div>
+    <button type="button" class="btn btn2" id="pencilbtn" style="margin-right: 1%">DRAW</button>
+    <button type="button" class="btn btn2" id="erasebtn" style="margin-right: 1%">ERASE</button>
+    <button type="button" class="btn btn2" id="clearbtn"  style="margin-right: 1%">CLEAR</button>
+    <button type="button" class="btn btn2" id="logbtn" style="margin-right: 1%">LOG</button>
+    <input type="color" id="c" name="c" value="#ff0000" class="image-picker" id="picker";>
+    <span id="text-label">Color Picker</span>
   </div>
-  <button type="button" class="btn btn-info" id="pencilbtn" style="margin-right: 1%">DRAW</button>
-    <button type="button" class="btn btn-secondary" id="erasebtn" style="margin-right: 1%">ERASE</button>
-    <button type="button" class="btn btn-success" id="clearbtn">CLEAR</button>
-    <button type="button" class="btn btn-secondary" id="logbtn" style="margin-right: 1%">LOG</button>
-  </div>
+
+
   <script src="./p5.min.js"></script>
   <script src="./addons/p5.dom.min.js"></script>
   <script src="./addons/socket.io-client.js"></script>
@@ -39,6 +48,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="./scripts/sketch.js"></script>
+
+
 </body>
 
 </html>

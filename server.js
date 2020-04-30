@@ -25,6 +25,9 @@ function newConnection(socket) {
 
 	socket.on('mouse', mouseMsg);
 	socket.on('active', activeHandler);
+	socket.on('marker', function(dump) {
+		socket.broadcast.emit('marker', "marker");
+	})
 
 	function activeHandler(socketId) {
 		console.log("current active", socketId);

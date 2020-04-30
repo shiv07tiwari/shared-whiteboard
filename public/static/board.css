@@ -21,8 +21,16 @@ form { bottom: 0; position:absolute; margin: 5px; display: flex; width: 97%;}
 #messages { margin-bottom: 40px ; }
 
 /*White board*/
-#sketch-holder {margin-top: 1%; margin-bottom: 1%; margin-right:10px;background: #ffffff; border: 2px #258971 solid;width: 65%;}
-#myCanvas {background: #ffffff}
+#sketch-holder {
+	margin-top: 1%;
+	margin-bottom: 1%; 
+	margin-right:10px;
+	background: #ffffff; 
+	border: 2px #258971 solid;
+	width:65%;
+	overflow-x: scroll;
+}
+#myCanvas {background: #ffffff;}
 
 /*@import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);*/
 

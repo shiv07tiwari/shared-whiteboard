@@ -17,7 +17,8 @@ app.use(express.static('public'));
 io.on('connection', newConnection)
 
 function newConnection(socket) {
-	console.log('connection:', socket.id);
+	console.log("New Client Connected")
+	console.log('Client Unique Id:', socket.id);
 	const obj = new Log(socket.id)
 	clients.push(obj)
 	//console.log("object added is :", obj)
@@ -31,7 +32,9 @@ function newConnection(socket) {
 	})
 
 	function activeHandler(socketId) {
-		console.log("current active", socketId);
+		if (socketId != null) {
+			console.log("Resource locked by: ", socketId);
+		}
 		activeUser = socketId;
 		socket.broadcast.emit('active', activeUser);
 	}
@@ -55,7 +58,6 @@ function newConnection(socket) {
 		
 		for (i in clients) {
 			if (clients[i].getSocketId() == socketId) {
-				console.log(clients[i])
 				socket.emit('logfile', clients[i]);
 				break;
 			}

@@ -30,3 +30,7 @@ While node is running, visit the locally running server at *http://localhost:300
 
 
 ## Screenshots
+![SS](https://github.com/shiv07tiwari/shared-whiteboard/blob/master/screenshots/Screenshot%20from%202020-05-01%2014-17-24.png)
+![SS](https://github.com/shiv07tiwari/shared-whiteboard/blob/master/screenshots/Screenshot%20from%202020-05-01%2014-18-05.png)
+![SS](https://github.com/shiv07tiwari/shared-whiteboard/blob/master/screenshots/Screenshot%20from%202020-05-01%2014-20-52.png)
+![SS](https://github.com/shiv07tiwari/shared-whiteboard/blob/master/screenshots/Screenshot%20from%202020-05-01%2014-21-41.png)

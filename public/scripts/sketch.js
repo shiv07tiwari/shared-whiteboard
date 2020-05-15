@@ -150,7 +150,11 @@ function mouseDragged() {
     socket.emit('mouse', {
       socketId: socket.id,
       data: data,
-      time: time
+      time: time,
+      colr: rgb_color.r,
+      colg: rgb_color.g,
+      colb: rgb_color.b,
+      flag: isErase
     });
     socket.emit('marker', "marker");
     noStroke()

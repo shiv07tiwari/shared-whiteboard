@@ -150,7 +150,11 @@ function mouseDragged() {
     socket.emit('mouse', {
       socketId: socket.id,
       data: data,
-      time: time
+      time: time,
+      colr: rgb_color.r,
+      colg: rgb_color.g,
+      colb: rgb_color.b,
+      flag: isErase
     });
     socket.emit('marker', "marker");
     noStroke()
@@ -173,7 +177,7 @@ function sendMsg(){
     // emit the message typed to the server.
     socket.emit('chat', {
       socketId: socket.id,
-      msg: $('#m').val(),
+      msg: tinymce.get("m").getContent({ format: "text" }),
       time: time
     });
     socket.emit('marker', "marker");

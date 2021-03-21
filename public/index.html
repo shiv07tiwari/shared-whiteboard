@@ -7,30 +7,49 @@
   <title>Shared Canvas</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="./static/board.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+    tinymce.init({
+      selector: "#m",
+      plugins: "emoticons",
+      toolbar: "emoticons",
+      toolbar_location: "bottom",
+      padding:20,
+      height:150,
+      width:370,
+      menubar: false
+    });
+  </script>
+  <script type= "css">
+    .tox{
+      display:inline;
+    }
+  </script>
 </head>
 
 <body>
-  <div class="outer-container"  >
-  <div class="row">
-  <div id="sketch-holder">
-    <!-- Our sketch will go here! -->
-  </div>
-<!------------------------>
-    <div class="detailBox">
-    <div class="titleBox">
-      <label>Messages</label>
+  <div class="container">
+    <div class="row">
+      <div id="sketch-holder" class = "col">
+        <!-- Our sketch will go here! -->
+      </div>
+      <div class="detailBox">
+        <div class="titleBox ">
+          <label>Messages</label>
+        </div>
+        <div class="actionBox">
+            <ul class="commentList" id="messages"></ul>
+        </div>
+        <div class="">
+          <form class = "form-inline flex" action="">
+                  <input id="m" class="form-control text-field" type="text" placeholder="Your message" />
+                  <button type="submit" class="btn send-btn">SEND</button>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="actionBox">
-        <ul class="commentList" id="messages"></ul>
-    </div>
-    <form class = "form-inline" action="">
-            <input id="m" class="form-control text-field" type="text" placeholder="Your message" />
-            <button type="submit" class="btn send-btn">SEND</button>
-    </form>
-    </div>
-<!------------------------>
-  
-  </div>
     <button type="button" class="btn btn2" id="pencilbtn" style="margin-right: 1%">DRAW</button>
     <button type="button" class="btn btn2" id="erasebtn" style="margin-right: 1%">ERASE</button>
     <button type="button" class="btn btn2" id="clearbtn"  style="margin-right: 1%">CLEAR</button>

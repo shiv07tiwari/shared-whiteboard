@@ -7,8 +7,6 @@
   <title>Shared Canvas</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="./static/board.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
     tinymce.init({
@@ -30,7 +28,7 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="outer-container">
     <div class="row">
       <div id="sketch-holder" class = "col">
         <!-- Our sketch will go here! -->
@@ -43,7 +41,7 @@
             <ul class="commentList" id="messages"></ul>
         </div>
         <div class="">
-          <form class = "form-inline flex" action="">
+          <form class = "form-inline" action="">
                   <input id="m" class="form-control text-field" type="text" placeholder="Your message" />
                   <button type="submit" class="btn send-btn">SEND</button>
           </form>
